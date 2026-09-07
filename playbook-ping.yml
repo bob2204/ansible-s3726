@@ -5,5 +5,5 @@
 
   tasks:
     - name: Appel au module ping
-      ping:
+      ansible.builtin.ping:
         data: ok
