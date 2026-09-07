@@ -1,0 +1,21 @@
+---
+- name: TP2
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Ajout d'un fichier /tmp/micro-tp-1.txt
+      ansible.builtin.lineinfile:
+        line: Micro-TP 1
+        dest: /tmp/micro-tp-1.txt
+        create: true
+        mode: "0600"
+
+    - name: Ajout d'un fichier /var/log/micro-tp-1.txt
+      ansible.builtin.lineinfile:
+        line: Micro-TP 1
+        dest: /var/log/micro-tp-1.txt
+        create: true
+        mode: "0600"
+      become: true
+
