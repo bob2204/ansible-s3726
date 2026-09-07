@@ -1,0 +1,9 @@
+---
+- name: Acte I
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Appel au module ping
+      ping:
+        data: ok
