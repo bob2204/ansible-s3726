@@ -3,3 +3,9 @@ deby-cli
 
 [php]
 fedora-cli
+
+[debian]
+deby-cli
+
+[redhat]
+fedora-cli

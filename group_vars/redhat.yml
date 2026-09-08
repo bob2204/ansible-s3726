@@ -1,0 +1,3 @@
+http_package_name: httpd
+http_service_name: httpd
+http_install: present
