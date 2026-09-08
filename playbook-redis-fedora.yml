@@ -13,6 +13,7 @@
     - name: Affichage de la variable redis
       ansible.builtin.debug:
         var: redis
+        verbosity: 2
       tags: var
 
     - name: Installation
