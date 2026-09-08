@@ -4,10 +4,17 @@
   gather_facts: false
   become: true
 
-  vars:
-    iface_redis: 192.168.56.246
-
   tasks:
+    - name: Chargement des variables
+      ansible.builtin.include_vars:
+        file: redis-conf.yml
+      tags: var
+
+    - name: Affichage de la variable redis
+      ansible.builtin.debug:
+        var: redis
+      tags: var
+
     - name: Installation
       ansible.builtin.package:
         name: redis
