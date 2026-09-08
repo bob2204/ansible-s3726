@@ -1,0 +1,18 @@
+---
+- name: Installation d'un service Apache
+  hosts: debian,redhat
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation d'Apache
+      ansible.builtin.package:
+        name: "{{ http_package_name }}"
+        update_cache: true
+        state: "{{ http_install }}"
+
+    - name: Configuration du service Apache
+      ansible.builtin.systemd:
+        name: "{{ http_service_name }}"
+        state: started
+        enabled: true
