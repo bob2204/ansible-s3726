@@ -5,7 +5,7 @@
   tasks:
     - name: Boucle n°1
       ansible.builtin.debug:
-        msg: "{{ stagiaire }}"
+        msg: "Stagiaire n°{{ nb + 1 }}: {{ stagiaire }}"
       loop:
         - Bob
         - Curt
@@ -13,3 +13,4 @@
         - Loé
       loop_control:
         loop_var: stagiaire
+        index_var: nb
