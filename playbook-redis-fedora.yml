@@ -12,8 +12,8 @@
 
     - name: Affichage de la variable redis
       ansible.builtin.debug:
-        var: redis
-        verbosity: 2
+        msg: "variable redis: {{ redis }}"
+        verbosity: 1
       tags: var
 
     - name: Installation
@@ -31,7 +31,7 @@
       ansible.builtin.lineinfile:
         dest: /etc/redis/redis.conf
         regex: ^bind
-        line: bind *
+        line: "bind {{ if_redis }}"
         backup: true
       notify:
         - restart-redis
