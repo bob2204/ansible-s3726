@@ -1,0 +1,9 @@
+---
+- name: Clauses when
+  hosts: all
+
+  tasks:
+    - name: Afficher la version de la distribution dans le cas de Debian
+      ansible.builtin.debug:
+        msg: "Distribution: {{ ansible_distribution_major_version }}"
+      when: ansible_os_family | lower != "redhat"
