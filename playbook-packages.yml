@@ -9,3 +9,20 @@
       ansible.builtin.package:
         name: apache2
         update_cache: true
+
+- name: Installation du paquet httpd sur Fedora
+  hosts: fedora-cli
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation d'Apache
+      ansible.builtin.package:
+        name: httpd
+        update_cache: true
+
+    - name: Configuration du service httpd
+      ansible.builtin.systemd:
+        name: httpd
+        state: started
+        enabled: true
