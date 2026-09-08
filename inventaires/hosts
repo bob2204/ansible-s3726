@@ -1,5 +1,5 @@
 [www]
-deby-cli ansible_host=192.168.56.210
+deby-cli
 
 [php]
-fedora-cli ansible_host=192.168.56.246
+fedora-cli

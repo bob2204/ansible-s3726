@@ -4,6 +4,9 @@
   gather_facts: false
   become: true
 
+  vars:
+    iface_redis: 192.168.56.246
+
   tasks:
     - name: Installation
       ansible.builtin.package:
