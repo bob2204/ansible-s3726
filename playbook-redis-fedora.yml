@@ -20,10 +20,13 @@
       ansible.builtin.lineinfile:
         dest: /etc/redis/redis.conf
         regex: ^bind
-        line: bind 192.168.56.246
+        line: bind *
         backup: true
       notify:
         - restart-redis
+
+    - name: On force l'exécution des handlers jusqu'ici notifiés
+      ansible.builtin.meta: flush_handlers
 
     - name: Tâche bidon
       ansible.builtin.debug:
