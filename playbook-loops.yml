@@ -1,0 +1,13 @@
+---
+- name: Présentation des boucles
+  hosts: deby-cli
+
+  tasks:
+    - name: Boucle n°1
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop:
+        - Bob
+        - Curt
+        - Pat
+        - Loé
