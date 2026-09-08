@@ -5,9 +5,11 @@
   tasks:
     - name: Boucle n°1
       ansible.builtin.debug:
-        msg: "{{ item }}"
+        msg: "{{ stagiaire }}"
       loop:
         - Bob
         - Curt
         - Pat
         - Loé
+      loop_control:
+        loop_var: stagiaire
