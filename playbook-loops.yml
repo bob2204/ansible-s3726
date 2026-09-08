@@ -26,3 +26,7 @@
       loop_control:
         loop_var: stagiaire
         index_var: nb
+
+    - name: Question de Jacques - afficher la variable d'indice 2
+      ansible.builtin.debug:
+        msg: "{{ logins[2] }}"
