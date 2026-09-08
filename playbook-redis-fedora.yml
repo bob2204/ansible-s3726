@@ -20,10 +20,19 @@
       ansible.builtin.lineinfile:
         dest: /etc/redis/redis.conf
         regex: ^bind
-        line: bind *
+        line: bind 192.168.56.246
         backup: true
+      notify:
+        - restart-redis
 
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Tâche bidon"
+
+  handlers:
     - name: Redémarrage du service Redis
       ansible.builtin.systemd:
         name: redis
         state: restarted
+      listen:
+        - restart-redis
