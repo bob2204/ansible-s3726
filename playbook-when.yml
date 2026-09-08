@@ -14,3 +14,19 @@
             msg: "Distribution: {{ ansible_distribution_minor_version }}"
       when:
         - ansible_os_family | lower != "redhat" or status | default("nogo") == 'go'
+
+    - name: Démo changed_when
+      ansible.builtin.shell:
+        cmd: date
+      changed_when: false
+
+    - name: Démo n°2 changed_when
+      ansible.builtin.shell:
+        cmd: grep curt /etc/passwd
+      changed_when: false
+      register: result
+      failed_when: result.rc == 2
+
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Résultat: {{ result }}"
