@@ -30,3 +30,18 @@
     - name: Tâche bidon
       ansible.builtin.debug:
         msg: "Résultat: {{ result }}"
+
+    - name: Clause block...when..rescue..always
+      block:
+        - name: Test /etc/passwd
+          ansible.builtin.shell:
+            cmd: grep curt /etc/passwd
+      rescue:
+        - name: Sauvetage
+          ansible.builtin.debug:
+            msg: "C'est un peu raté !"
+      always:
+        - name: Un dernier mot à dire
+          ansible.builtin.debug:
+            msg: "C'est fini !"
+      tags: rescue
