@@ -3,7 +3,14 @@
   hosts: all
 
   tasks:
-    - name: Afficher la version de la distribution dans le cas de Debian
-      ansible.builtin.debug:
-        msg: "Distribution: {{ ansible_distribution_major_version }}"
-      when: ansible_os_family | lower != "redhat"
+    - name: Affichage des versions majeure et mineure de la distribution
+      block:
+        - name: Afficher la version de la distribution dans le cas de Debian
+          ansible.builtin.debug:
+            msg: "Distribution: {{ ansible_distribution_major_version }}"
+
+        - name: Afficher la version de la distribution dans le cas de Debian
+          ansible.builtin.debug:
+            msg: "Distribution: {{ ansible_distribution_minor_version }}"
+      when:
+        - ansible_os_family | lower != "redhat" or status | default("nogo") == 'go'
