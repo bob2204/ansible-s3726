@@ -1,0 +1,29 @@
+---
+- name: Installation de Redis sur Fedora
+  hosts: fedora-cli
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Installation
+      ansible.builtin.package:
+        name: redis
+        update_cache: true
+
+    - name: Configuration du service
+      ansible.builtin.systemd:
+        name: redis
+        state: started
+        enabled: true
+
+    - name: Configuration Interface d'écoute
+      ansible.builtin.lineinfile:
+        dest: /etc/redis/redis.conf
+        regex: ^bind
+        line: bind *
+        backup: true
+
+    - name: Redémarrage du service Redis
+      ansible.builtin.systemd:
+        name: redis
+        state: restarted
