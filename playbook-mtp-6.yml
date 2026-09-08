@@ -1,0 +1,13 @@
+---
+- name: Affichage du nom des interfaces réseau sauf "lo"
+  hosts: all
+
+  tasks:
+    - name: On loop sur le tableau ansible_interfaces
+      ansible.builtin.debug:
+        msg: "iface {{ idx + 1 }}: {{ iface }}"
+      loop: "{{ ansible_interfaces | sort }}"
+      loop_control:
+        index_var: idx
+        loop_var: iface
+      when: iface != "lo"
