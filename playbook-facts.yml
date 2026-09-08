@@ -5,4 +5,4 @@
   tasks:
     - name: Type de Distribution
       ansible.builtin.debug:
-        msg: "{{ inventory_hostname }}: {{ ansible_os_family }}"
+        msg: "{{ inventory_hostname }}: {{ ansible_os_family | lower }}"
