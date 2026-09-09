@@ -1,0 +1,10 @@
+{# Ceci est un commentaire #}
+
+Cible: {{ inventory_hostname }}
+
+Liste des interfaces réseau:
+{% for iface in ansible_facts.interfaces|sort %}
+{% if iface != 'lo' %}
+- {{ iface }}
+{% endif %}
+{% endfor %}
