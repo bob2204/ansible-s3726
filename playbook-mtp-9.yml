@@ -1,0 +1,92 @@
+---
+- name: Installation de Nginx sur le groupe www
+  hosts: www
+  become: true
+
+  tasks:
+    - name: Installation de nginx
+      ansible.builtin.package:
+        name: "{{ nginx_package_name }}"
+
+    - name: Paramètrage du service
+      ansible.builtin.systemd:
+        name: "{{ nginx_service_name }}"
+        state: started
+        enabled: true
+
+    - name: Copie du fichier de configuration Nginx
+      ansible.builtin.copy:
+        src: lab-lempnet/nginx-conf/default.conf.ansible
+        dest: /etc/nginx/sites-available/default
+      notify: restart_nginx
+
+    - name: Adaptation du fichier de configuration
+      ansible.builtin.lineinfile:
+        backrefs: true
+        regex: ^( +fastcgi_pass)
+        line: \1   192.168.56.246:9000;
+        backup: true
+        dest: /etc/nginx/sites-available/default
+
+  handlers:
+    - name: Redémarrage Nginx
+      ansible.builtin.systemd:
+        name: "{{ nginx_service_name }}"
+        state: restarted
+      listen: restart_nginx
+
+- name: Installation de PHP-FPM
+  hosts: php
+  become: true
+
+  tasks:
+    - name: Désactivation du service firewalld sur RedHat
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
+      when: ansible_facts.os_family == 'RedHat'
+
+    - name: Installation de PHP-FPM
+      ansible.builtin.package:
+        name: "{{ php_package_name }}"
+
+    - name: Configuration du service php-fpm
+      ansible.builtin.systemd:
+        name: "{{ php_service_name }}"
+        state: started
+        enabled: true
+
+    - name: Modification de la conf - I
+      ansible.builtin.lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        regex: ^listen =
+        line: listen = 192.168.56.246:9000
+        backup: true
+      notify: restart_php
+
+    - name: Modification de la conf - II
+      ansible.builtin.lineinfile:
+        dest: /etc/php-fpm.d/www.conf
+        backrefs: true
+        regex: ^(listen.allowed_clients.+)$
+        line: ;\1
+        backup: true
+      notify: restart_php
+
+  handlers:
+    - name: Restart php
+      ansible.builtin.systemd:
+        name: "{{ php_service_name }}"
+        state: restarted
+      listen: restart_php
+
+- name: Fichiers de site
+  hosts: www,php
+  become: true
+
+  tasks:
+    - name: Copie des fichiers de site
+      ansible.builtin.copy:
+        src: lab-lempnet/html
+        dest: /var/www/

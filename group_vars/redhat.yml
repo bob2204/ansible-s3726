@@ -1,3 +1,5 @@
 http_package_name: httpd
 http_service_name: httpd
-http_install: present
+http_install: absent
+php_package_name: php-fpm
+php_service_name: php-fpm

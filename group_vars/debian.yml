@@ -1,3 +1,5 @@
 http_package_name: apache2
 http_service_name: apache2
-http_install: present
+http_install: absent
+nginx_package_name: nginx
+nginx_service_name: nginx
