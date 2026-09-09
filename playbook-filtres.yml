@@ -1,0 +1,35 @@
+---
+- name: Présentation des filtres
+  hosts: deby-cli
+
+  vars:
+    a: 10
+    b: 20
+    passwd: "root:x:0:0:root:/root:/bin/bash"
+
+  tasks:
+    - name: Filtre upper
+      ansible.builtin.debug:
+        msg: "{{ 'filtres' | upper }}"
+
+    - name: Filtre upper
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname | upper }}"
+
+    - name: Filtre ternary
+      ansible.builtin.debug:
+        msg: "{{ (a > b) | ternary(a,b) }}"
+
+    - name: Filtre split
+      ansible.builtin.debug:
+        msg: "{{ ( passwd | split(':'))[-1] | upper }}"
+
+    - name: Cast
+      ansible.builtin.debug:
+        msg: "OK"
+      when: go | default(false) | bool == true
+
+    - name: Password
+      ansible.builtin.debug:
+        msg: "{{ 'motdepasse' | password_hash('sha256','trucbidule') }}"
+      tags: password
