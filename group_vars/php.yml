@@ -1,0 +1,2 @@
+allowed_php_clients: 192.168.56.210
+php_server_addr: 192.168.56.246

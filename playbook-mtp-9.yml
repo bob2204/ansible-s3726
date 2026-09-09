@@ -49,22 +49,12 @@
         state: started
         enabled: true
 
-    - name: Modification de la conf - I
-      ansible.builtin.lineinfile:
+    - name: Template de la conf PHP
+      ansible.builtin.template:
+        src: php/www.conf
         dest: /etc/php-fpm.d/www.conf
-        regex: ^listen =
-        line: listen = 192.168.56.246:9000
-        backup: true
       notify: restart_php
-
-    - name: Modification de la conf - II
-      ansible.builtin.lineinfile:
-        dest: /etc/php-fpm.d/www.conf
-        backrefs: true
-        regex: ^(listen.allowed_clients.+)$
-        line: ;\1
-        backup: true
-      notify: restart_php
+      tags: php
 
   handlers:
     - name: Restart php
