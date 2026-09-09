@@ -1,6 +1,18 @@
 ---
 logins:
-  - bob
-  - curt
-  - pat
-  - loe
+  - login: bob
+    groups:
+      - admin
+      - devops
+  - login: curt
+    groups:
+      - pedagogie
+      - sport
+  - login: pat
+    groups:
+      - musique
+      - cuisine
+  - login: loe
+    groups:
+      - mécanique
+      - musique
