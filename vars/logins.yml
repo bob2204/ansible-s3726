@@ -4,15 +4,19 @@ logins:
     groups:
       - admin
       - devops
+    password: azerty
   - login: curt
     groups:
       - pedagogie
       - sport
+    password: qwerty
   - login: pat
     groups:
       - musique
       - cuisine
+    password: azerty
   - login: loe
     groups:
-      - mécanique
+      - mecanique
       - musique
+    password: qwerty
