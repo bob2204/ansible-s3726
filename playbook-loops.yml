@@ -18,6 +18,7 @@
     - name: Nouvelle tâche include_vars
       ansible.builtin.include_vars:
         file: logins.yml
+      tags: logins
 
     - name: On itère sur le tableau logins
       ansible.builtin.debug:
@@ -26,7 +27,23 @@
       loop_control:
         loop_var: stagiaire
         index_var: nb
+      tags: never
 
     - name: Question de Jacques - afficher la variable d'indice 2
       ansible.builtin.debug:
         msg: "{{ logins[2] }}"
+      tags: never
+
+    - name: On itère sur le tableau logins pour afficher la clé login
+      ansible.builtin.debug:
+        msg: "Stagiaire n°{{ nb + 1 }}: {{ stagiaire.login }}"
+      loop: "{{ logins }}"
+      loop_control:
+        loop_var: stagiaire
+        index_var: nb
+
+    - name: Affichage de l'ensemble des groupes
+      ansible.builtin.debug:
+        msg: "{{ item[0].login }} - {{ item[1] }}"
+      loop: "{{ logins | subelements('groups') }}"
+      tags: logins
