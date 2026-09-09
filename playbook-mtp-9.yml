@@ -14,19 +14,11 @@
         state: started
         enabled: true
 
-    - name: Copie du fichier de configuration Nginx
-      ansible.builtin.copy:
-        src: lab-lempnet/nginx-conf/default.conf.ansible
+    - name: Copie du template de configuration Nginx
+      ansible.builtin.template:
+        src: nginx-conf/default.conf.ansible
         dest: /etc/nginx/sites-available/default
       notify: restart_nginx
-
-    - name: Adaptation du fichier de configuration
-      ansible.builtin.lineinfile:
-        backrefs: true
-        regex: ^( +fastcgi_pass)
-        line: \1   192.168.56.246:9000;
-        backup: true
-        dest: /etc/nginx/sites-available/default
 
   handlers:
     - name: Redémarrage Nginx
