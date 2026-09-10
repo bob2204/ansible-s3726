@@ -1,0 +1,14 @@
+---
+- name: Utilisaiton du rôle demo
+  hosts: deby-cli
+
+  pre_tasks:
+    - name: Test module copy
+      ansible.builtin.copy:
+        src: démo-1/stagiaires.txt
+        dest: /tmp/stagiaires.txt
+
+  roles:
+    - name: Appel au role demo
+      role: demo
+      nb_jours: 3

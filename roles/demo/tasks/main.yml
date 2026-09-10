@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/demo
+
+- name: Fichier vars.yml
+  ansible.builtin.include_tasks:
+    file: vars.yml
+
+- name: Tâche I du rôle demo
+  ansible.builtin.debug:
+    msg: "Rôle demo (stage: {{ stage }}/{{ nb_jours }} jrs)"
+  changed_when: true
+  notify:
+    - appel_handler
