@@ -1,0 +1,12 @@
+---
+- name: Micro-TP n°12
+  hosts: all
+
+  tasks:
+    - name: Consigne n°1
+      ansible.builtin.copy:
+        content: "{{ ansible_facts[item].ipv4.address }} {{ ansible_facts.hostname }}\n"
+        dest: /tmp/host
+      loop: "{{ ansible_facts.interfaces }}"
+      when: ansible_facts[item].ipv4.address | regex_search('^192\.168\.56') != None
+      # when: ansible_facts[item].ipv4.address is match('^192\.168\.56')
