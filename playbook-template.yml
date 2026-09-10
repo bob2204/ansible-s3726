@@ -1,0 +1,9 @@
+---
+- name: Présentation des templates
+  hosts: all
+
+  tasks:
+    - name: Template
+      ansible.builtin.template:
+        src: demo.txt.j2
+        dest: /tmp/demo.txt
