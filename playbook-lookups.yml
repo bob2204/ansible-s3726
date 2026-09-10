@@ -1,0 +1,34 @@
+---
+- name: Présentation des lookups
+  hosts: all
+
+  vars:
+    rennes_formation: docker
+    toulouse_formation: ansible
+    strasbourg_formation: autocad
+
+  tasks:
+    - name: Lookup dig -> Interrogation DNS
+      ansible.builtin.debug:
+        msg: "kernel.org: {{ lookup('dig', 'kernel.org') }}"
+        verbosity: 1
+
+    - name: Lookup env
+      ansible.builtin.debug:
+        msg: "PATH: {{ lookup('env', 'PATH') }}"
+        verbosity: 1
+
+    - name: Lookup file
+      ansible.builtin.debug:
+        msg: "/etc/hosts: {{ (lookup('file', '/etc/hosts') | split('\n'))[-1] }}"
+        verbosity: 1
+
+    - name: Lookup template
+      ansible.builtin.debug:
+        msg: "demo.txt: {{ lookup('template', 'templates/demo.txt.j2') }}"
+        verbosity: 1
+
+    # La variable centre est passée sous forme d'extra-variable -> -e centre=toulouse
+    - name: Lookup vars
+      ansible.builtin.debug:
+        msg: "{{ centre }}: {{ lookup('vars', centre + '_formation') | upper }}"
