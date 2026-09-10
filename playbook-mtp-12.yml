@@ -10,3 +10,13 @@
       loop: "{{ ansible_facts.interfaces }}"
       when: ansible_facts[item].ipv4.address | regex_search('^192\.168\.56') != None
       # when: ansible_facts[item].ipv4.address is match('^192\.168\.56')
+
+    # Le fichier est à créer sur le pilote en contenant les infos de chaque cible
+    - name: Consigne n°3
+      ansible.builtin.lineinfile:
+        line: "{{ ansible_facts[item].ipv4.address }} {{ ansible_facts.hostname }}"
+        dest: /tmp/host
+        create: true
+      loop: "{{ ansible_facts.interfaces }}"
+      when: ansible_facts[item].ipv4.address | regex_search('^192\.168\.56') != None
+      delegate_to: localhost
