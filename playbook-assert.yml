@@ -1,0 +1,15 @@
+---
+- name: Module assert
+  hosts: all
+
+  tasks:
+    - name: Prérequis
+      ansible.builtin.assert:
+        success_msg: "Distribution OK"
+        fail_msg: "Distribution non supportée"
+        that:
+          - ansible_facts.os_family != 'RedHat' or ansible_facts.distribution_major_version > "40"
+
+    - name: Go
+      ansible.builtin.debug:
+        msg: "Tout est OK"
