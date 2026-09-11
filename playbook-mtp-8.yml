@@ -1,0 +1,20 @@
+---
+- name: Création des groupes et comptes à partir du fichier logins.yml
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Chargement du fichier logins.yml
+      ansible.builtin.include_vars:
+        file: logins.yml
+
+    - name: Création des groupes
+      ansible.builtin.group:
+        name: "{{ item[1] }}"
+      loop: "{{ logins | subelements('groups') }}"
+
+    - name: Création des comptes
+      ansible.builtin.user:
+        name: "{{ item.login }}"
+        groups: "{{ item.groups }}"
+      loop: "{{ logins }}"
