@@ -1,0 +1,14 @@
+---
+- name: Installation de MariaDB sur deby-cli
+  hosts: fedora-cli
+  become: true
+
+  roles:
+    - role: geerlingguy.mysql
+      mysql_databases:
+        - name: stage
+      mysql_users:
+        - name: bob
+          host: '%'
+          password: azerty
+          priv: stage.*:ALL
