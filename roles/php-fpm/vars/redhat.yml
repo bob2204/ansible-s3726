@@ -1,2 +1,4 @@
-nginx_package_name: nginx
-nginx_service_name: nginx
+php_package_name: nginx
+php_service_name: nginx
+php_pdo_package_name: php-pdo
+php_mysql_pdo_driver_package_name: php-mysqlnd
