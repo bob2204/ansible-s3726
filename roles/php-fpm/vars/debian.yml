@@ -1,0 +1,2 @@
+php_package_name: php-fpm
+php_service_name: php-fpm

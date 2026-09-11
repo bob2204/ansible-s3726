@@ -1,0 +1,25 @@
+---
+- name: Infra nginx/php
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - name: Désactivation du service firewalld sur RedHat
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
+      when: ansible_facts.os_family == 'RedHat'
+
+  roles:
+    - role: nginx
+      when: inventory_hostname in groups['www']
+
+    - role: php-fpm
+      when: inventory_hostname in groups['php']
+
+  post_tasks:
+    - name: Copie des fichiers de site
+      ansible.builtin.copy:
+        src: lab-lempnet/html
+        dest: /var/www/

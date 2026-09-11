@@ -1,0 +1,28 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/nginx
+- name: Inclusion de variables
+  ansible.builtin.include_vars:
+    file: debian.yml
+  when: ansible_facts.os_family == 'Debian'
+
+- name: Inclusion de variables
+  ansible.builtin.include_vars:
+    file: redhat.yml
+  when: ansible_facts.os_family == 'RedHat'
+
+- name: Installation de nginx
+  ansible.builtin.package:
+    name: "{{ nginx_package_name }}"
+
+- name: Paramètrage du service
+  ansible.builtin.systemd:
+    name: "{{ nginx_service_name }}"
+    state: started
+    enabled: true
+
+- name: Copie du template de configuration Nginx
+  ansible.builtin.template:
+    src: nginx-conf/default.conf.ansible
+    dest: /etc/nginx/sites-available/default
+  notify: restart_nginx
