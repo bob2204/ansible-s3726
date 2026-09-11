@@ -1,0 +1,8 @@
+---
+- name: Lookup maison
+  hosts: all
+
+  tasks:
+    - name: Lookup explode
+      ansible.builtin.debug:
+        msg: "{{ lookup('explode',inventory_hostname, wantlist=true) }}"
