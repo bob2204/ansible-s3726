@@ -1,0 +1,13 @@
+---
+- name: Module set_fact
+  hosts: all
+
+  tasks:
+    - name: Variable stage
+      ansible.builtin.set_fact:
+        stagefact: "k8s({{ inventory_hostname }})"
+        cacheable: true
+
+    - name: Référence à la variable
+      ansible.builtin.debug:
+        msg: "Stage: {{ stagefact }}"
