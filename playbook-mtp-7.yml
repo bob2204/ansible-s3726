@@ -1,0 +1,13 @@
+---
+- name: Affichage du nom des groupes du tableau logins
+  hosts: all
+
+  tasks:
+    - name: Chargement du fichier logins.yml
+      ansible.builtin.include_vars:
+        file: logins.yml
+
+    - name: Affichage de l'ensemble des groupes
+      ansible.builtin.debug:
+        msg: "{{ item[1] }}"
+      loop: "{{ logins | subelements('groups') }}"
